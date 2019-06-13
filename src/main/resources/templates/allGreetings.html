@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello and other greetings</title>
+</head>
+<body>
+    <h1>All the Greetings</h1>
+<ul>
+    <li th:each="greeting : ${greetings}">
+        <span th:text="${greeting.text}"></span>
+        (in <span th:text="${greeting.language}"></span>)
+    </li>
+</ul>
+</body>
+</html>
