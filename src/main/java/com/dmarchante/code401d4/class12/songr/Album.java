@@ -1,39 +1,39 @@
 package com.dmarchante.code401d4.class12.songr;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Album {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
-    String title;
-    String artist;
-    int songCount;
-    int length;
-    String url;
+
+    private long id;
+    private String albumTitle;
+    private String artist;
+    private int songCount;
+    private int length;
+    private String url;
+
+    @OneToMany(mappedBy = "album")
+    private List<Song> songs;
 
     public Album() {}
 
-    public Album(String title, String artist, int songCount, int length, String url) {
-        this.title = title;
+    public Album(String albumTitle, String artist, int songCount, int length, String url) {
+        this.albumTitle = albumTitle;
         this.artist = artist;
         this.songCount = songCount;
         this.length = length;
         this.url = url;
     }
 
-    public String getTitle() {
-        return this.title;
-    }
+    public long getId() { return this.id; }
 
-    public String getArtist() {
-        return this.artist;
-    }
+    public String getAlbumTitle() { return this.albumTitle; }
+
+    public String getArtist() { return this.artist; }
 
     public int getSongCount() {
         return this.songCount;
@@ -46,4 +46,6 @@ public class Album {
     public String getUrl() {
         return this.url;
     }
+
+    public List<Song> getSongs() { return this.songs; }
 }

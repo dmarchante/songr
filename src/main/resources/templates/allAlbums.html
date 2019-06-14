@@ -7,13 +7,14 @@
 <body>
     <h1>List of Albums</h1>
     <div th:each="album : ${albums}">
-        <h3 th:text="${album.title}"></h3>
+        <h3 th:text="${album.albumTitle}"></h3>
         <p th:text="${album.artist}"></p>
         <img  th:src="${album.url}">
         <ul >
             <li>Song Count: <span th:text="${album.songCount}"></span></li>
             <li>Album Length (in seconds): <span th:text="${album.length}"></span></li>
         </ul>
+        <a th:href="@{'/album/' + ${album.id}}">View Details</a>
     </div>
 </body>
 </html>
