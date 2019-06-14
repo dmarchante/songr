@@ -10,6 +10,8 @@ import org.springframework.web.servlet.view.RedirectView;
 public class AlbumController {
     @Autowired
     AlbumRepository albumRepository;
+
+    @Autowired
     SongRepository songRepository;
 
 
@@ -35,21 +37,14 @@ public class AlbumController {
     @GetMapping("/album/{id}")
     public String getAlbum(@PathVariable long id, Model m) {
         Album album = albumRepository.findById(id).get();
-//        List<Album> songsWithTitle = albumRepository.findBySongTitleKey(songTitleKey);
-//
-//        if (songsWithTitle.size() > 0) {
-//            Iterable<Song> songs = songRepository.findAll();
-//            m.addAttribute("songs", songs);
-//        }
-
         m.addAttribute("album", album);
         return "albumDetail";
     }
 
     @PostMapping("/songs")
-    public RedirectView addSong(@RequestParam Long id, @RequestParam String songTitle) {
+    public RedirectView addSong(@RequestParam Long id, @RequestParam String songTitle, @RequestParam int length, int track) {
         Album album = albumRepository.findById(id).get();
-        Song song = new Song(album, songTitle);
+        Song song = new Song(album, songTitle, length, track);
         songRepository.save(song);
         return new RedirectView("/albums");
     }
