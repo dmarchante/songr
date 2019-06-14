@@ -1,18 +1,17 @@
 package com.dmarchante.code401d4.class12.songr;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.stream.Stream;
-
 @Controller
 public class AlbumController {
     @Autowired
     AlbumRepository albumRepository;
+    SongRepository songRepository;
+
 
     @GetMapping("/albums")
     public String getAllAlbums(Model m) {
@@ -27,12 +26,31 @@ public class AlbumController {
     }
 
     @PostMapping("/albums")
-    public RedirectView addAlbum(@RequestParam String title, @RequestParam String artist, @RequestParam int songCount, @RequestParam int length, @RequestParam String url) {
-        Album album = new Album(title, artist, songCount, length, url);
+    public RedirectView addAlbum(@RequestParam String albumTitle, @RequestParam String artist, @RequestParam int songCount, @RequestParam int length, @RequestParam String url) {
+        Album album = new Album(albumTitle, artist, songCount, length, url);
         albumRepository.save(album);
         return new RedirectView("/albums");
-
     }
 
+    @GetMapping("/album/{id}")
+    public String getAlbum(@PathVariable long id, Model m) {
+        Album album = albumRepository.findById(id).get();
+//        List<Album> songsWithTitle = albumRepository.findBySongTitleKey(songTitleKey);
+//
+//        if (songsWithTitle.size() > 0) {
+//            Iterable<Song> songs = songRepository.findAll();
+//            m.addAttribute("songs", songs);
+//        }
 
+        m.addAttribute("album", album);
+        return "albumDetail";
+    }
+
+    @PostMapping("/songs")
+    public RedirectView addSong(@RequestParam Long id, @RequestParam String songTitle) {
+        Album album = albumRepository.findById(id).get();
+        Song song = new Song(album, songTitle);
+        songRepository.save(song);
+        return new RedirectView("/albums");
+    }
 }
