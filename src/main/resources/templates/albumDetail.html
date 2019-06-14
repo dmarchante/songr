@@ -10,15 +10,17 @@
         <p th:text="${album.artist}"></p>
         <img  th:src="${album.url}">
         <ul th:each="song : ${album.songs}">
-        <li>Song Count: <span th:text="${album.songCount}"></span></li>
-        <li>Album Length (in seconds): <span th:text="${album.length}"></span></li>
-        <li th:text="${song.songTitle}"></li>
-    </ul>
+            <li>Song Count: <span th:text="${album.songCount}"></span></li>
+            <li>Album Length (in seconds): <span th:text="${album.length}"></span></li><li>Tracks:</li>
+            <li th:text="${song.songTitle}"></li>
+        </ul>
     </div>
     <h1>Add Songs</h1>
     <form method="POST" action="/songs">
         <input name="id" id="id" th:value="${album.id}" style="display:none;"/>
         <label for="songTitle">Song title:</label><input name="songTitle" id="songTitle"/>
+        <label for="length">Song length:</label><input name="length" id="length"/>
+        <label for="track">Track #:</label><input name="track" id="track"/>
         <input type="submit" />
     </form>
 </body>
